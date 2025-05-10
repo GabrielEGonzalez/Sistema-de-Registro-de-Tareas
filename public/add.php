@@ -68,7 +68,6 @@
         }
 
         input[type="text"] , input[type="date"]{
-            color: white;
             border:  none;
             background-color:rgba(122, 253, 122, 0.97);
             border-bottom:3px solid rgb(0, 146, 0);
@@ -85,7 +84,6 @@
         }
 
         select , option{
-        color: #000;
             padding: .4em;
             background-color: rgba(122, 253, 122, 0.97);
             border-bottom:3px solid rgb(0, 146, 0);
