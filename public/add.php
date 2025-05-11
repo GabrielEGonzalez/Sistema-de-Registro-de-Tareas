@@ -1,3 +1,32 @@
+<?php
+
+$data = '../data/data.json';
+$con = 0;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    $nuevoDATO = [
+        'nombre' => isset($_POST['nombre'] ) ? trim($_POST['nombre']) : '',
+        'descripcion' => isset($_POST['descripcion'] ) ? trim($_POST['descripcion']) : '',
+        'fecha_limite' => isset($_POST['fechaL'] ) ? trim($_POST['fechaL']) : '',
+        'estado' => isset($_POST['estado'] ) ? trim($_POST['estado']) : '',
+        'fecha_creacion' => isset($_POST['fechaC'] ) ? trim($_POST['fechaC']) : '',
+    ];
+
+    $dt = file_get_contents($data);
+    $datos = json_decode($dt,true);
+
+    if($datos == null){
+        $datos = [];
+    }
+    $id_unico = uniqid();
+    $datos[$id_unico] = $nuevoDATO;
+
+    $ndatos = json_encode($datos,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+    file_put_contents($data,$ndatos, LOCK_EX);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -91,7 +120,7 @@
     </style>
 
 <body>
-    <form action="/" method="post">
+    <form action="" method="post">
         <div><h1>Registro de tarea</h1></div>
         <div class="con">
             <div class="lcon">
