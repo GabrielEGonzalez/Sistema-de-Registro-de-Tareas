@@ -12,12 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 
     $datosUSER = $datos[$codigo];
-} else if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+} else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     /*
     Funcionamiento : se obtiene en get el codigo de index para los datos , se obtiene los datos enviados pr el metodo post que se ran datos actualizado y nuevos , 
      */
-    $Index = $_GET['codogo'];
+    $Index = $_POST['codigo'];
     $nuevosDatos = [
         'nombre' => isset($_POST['nombre']) ? trim($_POST['nombre']) : '',
         'descripcion' => isset($_POST['descripcion']) ? trim($_POST['descripcion']) : '',
@@ -30,8 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (empty($datos)) {
         $datosN = json_decode($datos,true);
     }
-    $datosN['codigo'] = $nuevosDatos;
-    file_put_contents($data,$datosN,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    $datosN[$Index] = $nuevosDatos;
+    file_put_contents($data,json_encode($datosN,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 }else{
     echo 'ERROR';
 }
@@ -55,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             <h1>Edicion de Registro de tarea</h1>
         </div>
         <div class="con">
+            <input type="text" name="codigo" id="codigo" value="<?php echo htmlspecialchars($codigo)?>">
             <div class="lcon">
                 <label for="nombre">Nombre:</label>
                 <input type="text" name="nombre" id="nombre" value="<?php echo htmlspecialchars($datosUSER["nombre"]);?>">
